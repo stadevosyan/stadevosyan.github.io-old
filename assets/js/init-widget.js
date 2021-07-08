@@ -1,6 +1,7 @@
 (function() {
     "use strict";
 
+    let modalElem;
     const __scheduleButtonSelector = '#scheduleNow'
     const __scheduleModalSelector = '.modal-my'
 
@@ -31,20 +32,45 @@
         console.log('inside load listener')
         if (select(__scheduleButtonSelector)) {
             window.console.log('entered if')
-            const elem = document.createElement('div');
 
-            const toggleModal = () => modal.classList.toggle("show-modal-my");
-            const windowOnClick = (e) => {
-                if (e.target === modal) {
-                    toggleModal();
+
+
+            on('click', __scheduleButtonSelector, () => {
+                modalElem = document.createElement('div');
+                modalElem.classList.add('modal-my');
+
+                const elemModal = document.createElement('div');
+                elemModal.classList.add('modal-box-my');
+
+                modalElem.appendChild(elemModal)
+
+                const closeButton = document.createElement('span');
+                closeButton.classList.add('close-button-my');
+                closeButton.innerHTML = 'X'
+
+                elemModal.appendChild(closeButton)
+
+                const elemIframe = document.createElement('iframe');
+                elemIframe.src = 'http://localhost:8080'
+
+                elemModal.appendChild(elemIframe)
+                modalElem.classList.add('show-modal-my');
+
+                document.body.appendChild(modalElem);
+                const deleteModal = () => {
+                    document.body.removeChild(modalElem)
+                    modalElem = undefined
+                };
+                const windowOnClick = (e) => {
+                    if (e.target === modalElem) {
+                        deleteModal();
+                    }
                 }
-            }
+                // window.addEventListener("click", windowOnClick);
 
-            let modal = select(__scheduleModalSelector);
-            window.addEventListener("click", windowOnClick);
 
-            on('click', '.close-button-my', toggleModal)
-            on('click', __scheduleButtonSelector, toggleModal)
+                on('click', '.close-button-my', deleteModal)
+            })
         }
     })
   })()
