@@ -20,9 +20,9 @@
         let selectEl = select(el, all)
         if (selectEl) {
             if (all) {
-            selectEl.forEach(e => e.addEventListener(type, listener))
+                selectEl.forEach(e => e.addEventListener(type, listener))
             } else {
-            selectEl.addEventListener(type, listener)
+                selectEl.addEventListener(type, listener)
             }
         }
     }
@@ -32,8 +32,6 @@
         console.log('inside load listener')
         if (select(__scheduleButtonSelector)) {
             window.console.log('entered if')
-
-
 
             on('click', __scheduleButtonSelector, () => {
                 modalElem = document.createElement('div');
