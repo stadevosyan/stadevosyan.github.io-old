@@ -3,6 +3,8 @@
 
     // -- get token --
     let tenantToken = ''
+    let iframeOrigin = 'http://localhost:8080'
+
     try {
         const script_tag = document.getElementById('st-w-scheduler')
         const query = script_tag.src.replace(/^[^?]+\??/, '');
@@ -34,11 +36,8 @@
 
     if (tenantToken) {
         // -- define selectors --
-        let modalElem;
+        let iframeContainer;
         const __scheduleButtonSelector = '#scheduleNow'
-        const __scheduleModalClass = 'modal-my'
-        const __closeModalButtonClass = 'close-button-my'
-        const __modalVisibleClass = 'show-modal-my'
 
         // -- define handlers --
         const select = (el, all = false) => {
@@ -49,9 +48,8 @@
                 return document.querySelector(el)
             }
         }
+
         const on = (type, el, listener, all = false) => {
-            console.log('entered on')
-            console.log({el})
             let selectEl = select(el, all)
             if (selectEl) {
                 if (all) {
@@ -71,44 +69,64 @@
             return true
         }
 
+        function setIframeContainerStyles(container) {
+            const {style} = container
+            style.position = 'fixed'
+            style.zIndex = 9999999
+            style.width = '100%'
+            style.height = '100%'
+            style.left = 0
+            style.top = 0
+            style.backgroundColor = 'rgba(0, 0, 0, 0.3)'
+            style.visibility = 'hidden';
+        }
+
         if (validateSchedulingButton()) {
-            // -- load iframe
-            modalElem = document.createElement('div');
-            modalElem.classList.add(__scheduleModalClass);
+            const bodyOverflow = document.body.style.overflow;
 
-            const elemModal = document.createElement('div');
-            elemModal.classList.add('modal-box-my');
+            // -- create and style iframe
+            iframeContainer = document.createElement('div');
+            setIframeContainerStyles(iframeContainer)
 
-            modalElem.appendChild(elemModal)
+            // modal actions
+            const hideModal = () => {
+                iframeContainer.style.visibility = 'hidden';
+                document.body.style.overflow = bodyOverflow;
+            };
 
-            const closeButton = document.createElement('span');
-            closeButton.addEventListener('click', () => {
-                console.log('onclick')
-            })
-            closeButton.classList.add(__closeModalButtonClass);
-            closeButton.innerHTML = 'X'
-
-            elemModal.appendChild(closeButton)
+            const showModal = () => {
+                iframeContainer.style.visibility = 'visible'
+                // TODO, store also height=100%, width=100%, padding=0
+                document.body.style.overflow = 'hidden'
+            };
 
             const elemIframe = document.createElement('iframe');
-            elemIframe.src = 'http://localhost:8080?token=' + tenantToken;
-            elemModal.appendChild(elemIframe)
+            elemIframe.src = iframeOrigin + '?token=' + tenantToken;
+            elemIframe.style.width = '100%';
+            elemIframe.style.height = '100%';
 
-            document.body.appendChild(modalElem);
-
-            const hideModal = () => {
-                console.log('trying to remove class')
-                modalElem.classList.remove(__modalVisibleClass);
-            };
-            on('click', '.' + __closeModalButtonClass, hideModal)
+            iframeContainer.appendChild(elemIframe)
+            document.body.insertBefore(iframeContainer, document.body.firstChild);
 
             // -- load iframe
             window.addEventListener('load', function (e) {
                 if (select(__scheduleButtonSelector)) {
-                    console.log('entered if')
                     on('click', __scheduleButtonSelector, () => {
-                        modalElem.classList.add(__modalVisibleClass);
+                        showModal();
                     })
+                }
+            })
+
+            window.addEventListener('message', (e) => {
+                console.log({e})
+                if (e.origin === iframeOrigin) {
+                    if (e.data === 'ready') {
+                        console.log('helllllo')
+                    }
+
+                    if (e.data === 'close') {
+                        console.log('close')
+                    }
                 }
             })
         }
