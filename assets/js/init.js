@@ -82,6 +82,7 @@
         }
 
         if (validateSchedulingButton()) {
+            let widgetReadyToRender = false
             const bodyOverflow = document.body.style.overflow;
 
             // -- create and style iframe
@@ -112,20 +113,21 @@
             window.addEventListener('load', function (e) {
                 if (select(__scheduleButtonSelector)) {
                     on('click', __scheduleButtonSelector, () => {
-                        showModal();
+                        if (widgetReadyToRender) {
+                            showModal();
+                        }
                     })
                 }
             })
 
             window.addEventListener('message', (e) => {
-                console.log({e})
                 if (e.origin === iframeOrigin) {
                     if (e.data === 'ready') {
-                        console.log('helllllo')
+                        widgetReadyToRender = true
                     }
 
                     if (e.data === 'close') {
-                        console.log('close')
+                        hideModal()
                     }
                 }
             })
