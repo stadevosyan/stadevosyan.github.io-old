@@ -86,7 +86,7 @@
           </li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
           <li><a class="getstarted scrollto" href="#about">Get Started</a></li>
-          <li><a id='scheduleNow' class="getstarted">Schedule Now</a></li>
+          <li><a onClick="STWidgetManager('ws-open')" class="getstarted">Schedule Now</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -698,8 +698,13 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Template Main JS File -->
-  <script id='st-w-scheduler' src="./assets/js/init.js?token=6B5249C3-6460-4AE9-83A8-487A729B54A4"></script>
-<!--  <script id='st-w-scheduler' data-token="12345asdfg" src="https://static.servicetitan.com/webscheduler/init.js"></script>-->
+<script>
+  (function(q,w,e,r,t,y,u){q[t]=q[t]||function(){(q[t].q = q[t].q || []).push(arguments)};
+    q[t].l=1*new Date();y=w.createElement(e);u=w.getElementsByTagName(e)[0];y.async=true;
+    y.src=r;u.parentNode.insertBefore(y,u);q[t]('init', 'a96ea793-47df-4876-b1de-fe84df3a7355');
+  })(window, document, 'script', 'https://static.servicetitan.com/webscheduler/shim.js', 'STWidgetManager');
+</script>
+<!--./assets/js/shim.js-->
 </body>
 
 </html>
