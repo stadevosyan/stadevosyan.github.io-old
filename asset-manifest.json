@@ -1,0 +1,16 @@
+{
+  "main.css": "/counter-app/static/css/main.2d01a315.chunk.css",
+  "main.js": "/counter-app/static/js/main.17b2d392.chunk.js",
+  "main.js.map": "/counter-app/static/js/main.17b2d392.chunk.js.map",
+  "runtime~main.js": "/counter-app/static/js/runtime~main.c63f0888.js",
+  "runtime~main.js.map": "/counter-app/static/js/runtime~main.c63f0888.js.map",
+  "static/css/2.b84c7ae5.chunk.css": "/counter-app/static/css/2.b84c7ae5.chunk.css",
+  "static/js/2.cdc130cc.chunk.js": "/counter-app/static/js/2.cdc130cc.chunk.js",
+  "static/js/2.cdc130cc.chunk.js.map": "/counter-app/static/js/2.cdc130cc.chunk.js.map",
+  "index.html": "/counter-app/index.html",
+  "precache-manifest.a2042e11286033abeb84472923c5d5b8.js": "/counter-app/precache-manifest.a2042e11286033abeb84472923c5d5b8.js",
+  "service-worker.js": "/counter-app/service-worker.js",
+  "static/css/2.b84c7ae5.chunk.css.map": "/counter-app/static/css/2.b84c7ae5.chunk.css.map",
+  "static/css/main.2d01a315.chunk.css.map": "/counter-app/static/css/main.2d01a315.chunk.css.map",
+  "static/media/font-awesome.css": "/counter-app/static/media/fontawesome-webfont.fee66e71.woff"
+}
